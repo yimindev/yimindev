@@ -14,11 +14,11 @@ const {
   description = siteConfig.description,
 } = Astro.props;
 
-const pageTitle = title === siteConfig.title ? title : `${title} - ${siteConfig.title}`;
+const pageTitle = title === siteConfig.title ? title : `${title} — ${siteConfig.title}`;
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,6 +27,8 @@ const pageTitle = title === siteConfig.title ? title : `${title} - ${siteConfig.
 
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
 
     <script is:inline>
       const theme = (() => {
@@ -42,9 +44,9 @@ const pageTitle = title === siteConfig.title ? title : `${title} - ${siteConfig.
       }
     </script>
   </head>
-  <body class="min-h-screen flex flex-col font-sans antialiased text-neutral-800 dark:text-neutral-200 bg-white dark:bg-neutral-950">
+  <body class="min-h-screen flex flex-col antialiased transition-colors duration-200">
     <Header />
-    <main class="flex-1 max-w-2xl w-full mx-auto px-4 py-8">
+    <main class="flex-1 max-w-[680px] w-full mx-auto px-5 pt-8 pb-16">
       <slot />
     </main>
     <Footer />

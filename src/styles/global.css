@@ -4,8 +4,17 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
+  :root {
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  }
+
   html {
     color-scheme: light;
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   html.dark {
@@ -13,12 +22,135 @@
   }
 
   body {
-    background-color: #ffffff;
-    color: #1c1c1c;
+    background-color: #fafafa;
+    color: #18181b;
   }
 
   .dark body {
-    background-color: #0c0c0c;
-    color: #e2e2e2;
+    background-color: #09090b;
+    color: #f4f4f5;
   }
+
+  /* 选中文本高亮质感 */
+  ::selection {
+    background-color: rgba(24, 24, 27, 0.12);
+  }
+  .dark ::selection {
+    background-color: rgba(244, 244, 245, 0.2);
+  }
+}
+
+/* 博客正文排版精细化调优 */
+.prose {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #27272a;
+}
+
+.dark .prose {
+  color: #d4d4d8;
+}
+
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  letter-spacing: -0.01em;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: #09090b;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4 {
+  color: #fafafa;
+}
+
+.prose h2 {
+  font-size: 1.35rem;
+  margin-top: 2.2em;
+  margin-bottom: 0.8em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dark .prose h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.prose h3 {
+  font-size: 1.15rem;
+  margin-top: 1.8em;
+  margin-bottom: 0.6em;
+}
+
+.prose blockquote {
+  font-style: normal;
+  font-weight: 400;
+  border-left-width: 2px;
+  border-left-color: #71717a;
+  color: #52525b;
+  padding-left: 1rem;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.dark .prose blockquote {
+  border-left-color: #52525b;
+  color: #a1a1aa;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  font-weight: 500;
+  color: #09090b;
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+.dark .prose code {
+  color: #f4f4f5;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.prose pre {
+  background-color: #18181b !important;
+  color: #f4f4f5 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.dark .prose pre {
+  background-color: #121215 !important;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.prose pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  color: inherit !important;
+  font-size: inherit !important;
+}
+
+.prose a {
+  color: #18181b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #a1a1aa;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.dark .prose a {
+  color: #f4f4f5;
+  text-decoration-color: #52525b;
+}
+
+.prose a:hover {
+  text-decoration-color: currentColor;
 }

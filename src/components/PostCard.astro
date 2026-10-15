@@ -16,29 +16,45 @@ const categoryLabelMap: Record<string, string> = {
 
 const categoryLabel = categoryLabelMap[post.data.category] || post.data.category;
 
-const formattedDate = new Intl.DateTimeFormat("en-US", {
+const formattedDate = new Intl.DateTimeFormat("zh-CN", {
   year: "numeric",
   month: "2-digit",
   day: "2-digit",
-})
-  .format(post.data.pubDate)
-  .replace(/\//g, "-");
+}).format(post.data.pubDate);
 ---
 
-<div class="py-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 group">
-  <div class="flex items-baseline gap-2 min-w-0">
+<article class="group py-4 transition-colors">
+  <div class="flex items-baseline justify-between gap-4">
     <a
       href={`/blog/${post.id}`}
-      class="text-sm font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate"
+      class="text-[15px] font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors tracking-tight leading-snug"
     >
       {post.data.title}
     </a>
+
+    <div class="flex items-center gap-2.5 text-xs text-neutral-400 dark:text-neutral-500 font-mono shrink-0 tabular-nums">
+      <span class="text-[11px] px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+        {categoryLabel}
+      </span>
+      <time datetime={post.data.pubDate.toISOString()}>
+        {formattedDate}
+      </time>
+    </div>
   </div>
 
-  <div class="flex items-center gap-3 text-xs text-neutral-400 dark:text-neutral-500 shrink-0 font-mono">
-    <span>[{categoryLabel}]</span>
-    <time datetime={post.data.pubDate.toISOString()}>
-      {formattedDate}
-    </time>
-  </div>
-</div>
+  <p class="mt-1.5 text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2 leading-relaxed">
+    {post.data.description}
+  </p>
+
+  {post.data.subjectAuthor && (
+    <div class="mt-2 text-xs text-neutral-400 dark:text-neutral-500 flex items-center gap-2">
+      <span>{post.data.category === "books" ? "作者：" : "导演："}{post.data.subjectAuthor}</span>
+      {post.data.year && <span>({post.data.year})</span>}
+      {post.data.rating && (
+        <span class="text-amber-500 font-mono tracking-wider">
+          {"★".repeat(post.data.rating)}
+        </span>
+      )}
+    </div>
+  )}
+</article>

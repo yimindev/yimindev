@@ -17,9 +17,9 @@ const categories = [
 ];
 ---
 
-<Layout title="博客与文章">
+<Layout title="博客与笔记">
   <div class="space-y-6">
-    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-2 border-b border-neutral-200 dark:border-neutral-800">
+    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-3 border-b border-neutral-200/80 dark:border-neutral-800/80">
       <h1 class="text-base font-semibold text-neutral-900 dark:text-neutral-100">
         博客与笔记
       </h1>
@@ -40,7 +40,7 @@ const categories = [
     </div>
 
     <!-- 文章列表 -->
-    <div id="posts-container" class="divide-y divide-neutral-100 dark:divide-neutral-900">
+    <div id="posts-container" class="divide-y divide-neutral-100 dark:divide-neutral-800/80">
       {sortedPosts.map((post) => (
         <div data-post-category={post.data.category} class="post-item">
           <PostCard post={post} />
@@ -48,8 +48,8 @@ const categories = [
       ))}
     </div>
 
-    <div id="empty-state" class="hidden py-10 text-center text-xs text-neutral-400">
-      暂无该分类文章。
+    <div id="empty-state" class="hidden py-12 text-center text-xs text-neutral-400">
+      该分类下暂无文章。
     </div>
   </div>
 </Layout>

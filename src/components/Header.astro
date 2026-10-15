@@ -10,25 +10,25 @@ const navLinks = [
 ];
 ---
 
-<header class="w-full">
-  <div class="max-w-2xl mx-auto px-4 h-16 flex items-center justify-between">
+<header class="w-full pt-6 pb-4">
+  <div class="max-w-[680px] mx-auto px-5 flex items-center justify-between">
     <a
       href="/"
-      class="text-sm font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 hover:opacity-80 transition-opacity"
+      class="text-sm font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 hover:opacity-75 transition-opacity"
     >
       {siteConfig.title}
     </a>
 
-    <nav class="flex items-center space-x-4 text-xs">
+    <nav class="flex items-center space-x-5 text-[13px]">
       {navLinks.map((item) => {
         const isActive = currentPath === item.href || (item.href !== "/" && currentPath.startsWith(item.href));
         return (
           <a
             href={item.href}
             class:list={[
-              "transition-colors",
+              "transition-colors duration-150",
               isActive
-                ? "font-medium text-neutral-900 dark:text-neutral-100 underline underline-offset-4"
+                ? "text-neutral-950 dark:text-white font-medium"
                 : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
             ]}
           >
@@ -41,12 +41,15 @@ const navLinks = [
         href={siteConfig.github}
         target="_blank"
         rel="noopener noreferrer"
-        class="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+        class="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-150 inline-flex items-center gap-0.5"
       >
-        GitHub
+        <span>GitHub</span>
+        <span class="text-[10px] text-neutral-400">↗</span>
       </a>
 
-      <ThemeToggle />
+      <div class="pl-1 border-l border-neutral-200 dark:border-neutral-800">
+        <ThemeToggle />
+      </div>
     </nav>
   </div>
 </header>

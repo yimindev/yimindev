@@ -4,14 +4,14 @@ import { siteConfig } from "../data/siteConfig";
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="w-full border-t border-neutral-200 dark:border-neutral-800 mt-20 transition-colors">
-  <div class="max-w-2xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 dark:text-neutral-500 gap-3">
+<footer class="w-full mt-auto">
+  <div class="max-w-[680px] mx-auto px-5 py-8 border-t border-neutral-200/70 dark:border-neutral-800/70 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-400 dark:text-neutral-500 gap-3">
     <span>© {currentYear} {siteConfig.author}</span>
     <a
       href={siteConfig.icp.link}
       target="_blank"
       rel="noopener noreferrer"
-      class="hover:text-neutral-900 dark:hover:text-neutral-300 transition-colors"
+      class="hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors"
     >
       {siteConfig.icp.text}
     </a>

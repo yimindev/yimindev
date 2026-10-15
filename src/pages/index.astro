@@ -12,56 +12,57 @@ const recentPosts = allPosts
 ---
 
 <Layout>
-  <!-- 个人简介（纯技术，无废话） -->
-  <section class="space-y-2 mb-12">
+  <!-- 个人简介（极简但字体排版讲究） -->
+  <section class="space-y-3 mb-14">
     <h1 class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 font-mono">
       yimindev
     </h1>
-    <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+    <p class="text-[15px] text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-xl">
       软件工程师。关注 AI Agent、语义网关、系统架构与数据工程。
     </p>
-    <div class="text-xs pt-1">
+    <div class="pt-1 text-xs">
       <a
         href={siteConfig.github}
         target="_blank"
         rel="noopener noreferrer"
-        class="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 underline underline-offset-4"
+        class="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors inline-flex items-center gap-1"
       >
-        GitHub: github.com/yimindev ↗
+        <span>GitHub: github.com/yimindev</span>
+        <span class="text-[10px] text-neutral-400">↗</span>
       </a>
     </div>
   </section>
 
   <!-- 开源项目 -->
-  <section class="mb-12">
-    <div class="flex items-baseline justify-between mb-2 pb-2 border-b border-neutral-200 dark:border-neutral-800">
-      <h2 class="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+  <section class="mb-14">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
         开源项目
       </h2>
     </div>
 
-    <div>
+    <div class="space-y-3">
       {projectsData.map((project) => (
         <ProjectCard project={project} />
       ))}
     </div>
   </section>
 
-  <!-- 文章列表 -->
+  <!-- 文章与笔记 -->
   <section>
-    <div class="flex items-baseline justify-between mb-2 pb-2 border-b border-neutral-200 dark:border-neutral-800">
-      <h2 class="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-        文章与笔记
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+        近期文章
       </h2>
       <a
         href="/blog"
-        class="text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200"
+        class="text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
       >
-        全部 →
+        全部 ({allPosts.length}) →
       </a>
     </div>
 
-    <div class="divide-y divide-neutral-100 dark:divide-neutral-900">
+    <div class="divide-y divide-neutral-100 dark:divide-neutral-800/80">
       {recentPosts.map((post) => (
         <PostCard post={post} />
       ))}

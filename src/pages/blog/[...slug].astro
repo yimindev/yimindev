@@ -22,65 +22,98 @@ const categoryLabelMap: Record<string, string> = {
 
 const categoryLabel = categoryLabelMap[post.data.category] || post.data.category;
 
-const formattedDate = new Intl.DateTimeFormat("en-US", {
+const formattedDate = new Intl.DateTimeFormat("zh-CN", {
   year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-})
-  .format(post.data.pubDate)
-  .replace(/\//g, "-");
+  month: "long",
+  day: "numeric",
+}).format(post.data.pubDate);
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
-  <article>
+  <article class="max-w-[680px] mx-auto">
     <!-- 返回导航 -->
-    <div class="mb-6">
+    <div class="mb-8">
       <a
         href="/blog"
-        class="text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+        class="text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors inline-flex items-center gap-1"
       >
-        ← 返回列表
+        <span>←</span>
+        <span>全部文章</span>
       </a>
     </div>
 
-    <!-- 文章标题与元信息 -->
-    <header class="mb-8 pb-4 border-b border-neutral-200 dark:border-neutral-800">
-      <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
-        {post.data.title}
-      </h1>
-
-      <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-neutral-400 dark:text-neutral-500 font-mono">
+    <!-- 标题与文章元信息 -->
+    <header class="mb-10 pb-6 border-b border-neutral-200/80 dark:border-neutral-800/80">
+      <div class="flex items-center gap-2 text-xs text-neutral-400 dark:text-neutral-500 font-mono mb-3">
         <time datetime={post.data.pubDate.toISOString()}>
           {formattedDate}
         </time>
         <span>·</span>
-        <span>[{categoryLabel}]</span>
-        {post.data.subjectAuthor && (
-          <>
-            <span>·</span>
-            <span>{post.data.category === "books" ? "作者: " : "导演: "}{post.data.subjectAuthor}</span>
-          </>
-        )}
+        <span class="text-neutral-600 dark:text-neutral-400 font-sans">
+          {categoryLabel}
+        </span>
         {post.data.rating && (
           <>
             <span>·</span>
-            <span>{"★".repeat(post.data.rating)}</span>
+            <span class="text-amber-500 font-mono tracking-wider">
+              {"★".repeat(post.data.rating)}
+            </span>
           </>
         )}
       </div>
+
+      <h1 class="text-2xl sm:text-[28px] font-bold tracking-tight text-neutral-900 dark:text-neutral-100 leading-snug">
+        {post.data.title}
+      </h1>
+
+      {post.data.description && (
+        <p class="mt-3 text-base text-neutral-500 dark:text-neutral-400 leading-relaxed">
+          {post.data.description}
+        </p>
+      )}
+
+      <!-- 书评与影评专属元信息条 -->
+      {post.data.subjectAuthor && (
+        <div class="mt-5 py-2.5 px-3.5 rounded-md bg-neutral-100/70 dark:bg-neutral-900/60 text-xs text-neutral-600 dark:text-neutral-400 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono">
+          <div>
+            <span class="text-neutral-400 font-sans">{post.data.category === "books" ? "作者：" : "导演："}</span>
+            <span class="text-neutral-800 dark:text-neutral-200 font-sans font-medium">{post.data.subjectAuthor}</span>
+          </div>
+          {post.data.year && (
+            <div>
+              <span class="text-neutral-400 font-sans">{post.data.category === "books" ? "出版：" : "上映："}</span>
+              <span class="text-neutral-800 dark:text-neutral-200">{post.data.year}</span>
+            </div>
+          )}
+          {post.data.rating && (
+            <div>
+              <span class="text-neutral-400 font-sans">评价：</span>
+              <span class="text-amber-500 tracking-wider">{"★".repeat(post.data.rating)}</span>
+              <span class="text-neutral-400"> ({post.data.rating}/5)</span>
+            </div>
+          )}
+        </div>
+      )}
     </header>
 
-    <!-- 文章正文 -->
-    <div class="prose dark:prose-invert prose-neutral max-w-none text-sm leading-relaxed prose-headings:font-semibold prose-a:text-neutral-900 dark:prose-a:text-neutral-100 prose-a:underline prose-pre:border prose-pre:border-neutral-200 dark:prose-pre:border-neutral-800">
+    <!-- 文章正文排版 -->
+    <div class="prose dark:prose-invert max-w-none">
       <Content />
     </div>
 
-    <div class="mt-12 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+    <!-- 底部导航 -->
+    <div class="mt-14 pt-6 border-t border-neutral-200/80 dark:border-neutral-800/80 flex items-center justify-between text-xs text-neutral-400">
       <a
         href="/blog"
-        class="text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+        class="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
       >
         ← 返回博客列表
+      </a>
+      <a
+        href="#top"
+        class="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+      >
+        回到顶部 ↑
       </a>
     </div>
   </article>
