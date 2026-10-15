@@ -1,0 +1,141 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const categoryMap: Record<string, { label: string; colorClass: string }> = {
+  tech: {
+    label: "技术",
+    colorClass: "bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200/50 dark:border-blue-800/50",
+  },
+  books: {
+    label: "书评",
+    colorClass: "bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200/50 dark:border-amber-800/50",
+  },
+  movies: {
+    label: "影评",
+    colorClass: "bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border-purple-200/50 dark:border-purple-800/50",
+  },
+  notes: {
+    label: "随笔",
+    colorClass: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200/50 dark:border-emerald-800/50",
+  },
+};
+
+const categoryInfo = categoryMap[post.data.category] || {
+  label: post.data.category,
+  colorClass: "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300",
+};
+
+const formattedDate = new Intl.DateTimeFormat("zh-CN", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+}).format(post.data.pubDate);
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <article class="max-w-2xl mx-auto">
+    <!-- 返回导航 -->
+    <div class="mb-8">
+      <a
+        href="/blog"
+        class="inline-flex items-center text-xs text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors"
+      >
+        <span class="mr-1">←</span> 返回文章列表
+      </a>
+    </div>
+
+    <!-- 文章元信息头部 -->
+    <header class="mb-8 pb-6 border-b border-neutral-200/60 dark:border-neutral-800/60">
+      <div class="flex flex-wrap items-center gap-2 text-xs text-neutral-400 dark:text-neutral-500 mb-3">
+        <time datetime={post.data.pubDate.toISOString()} class="font-mono">
+          {formattedDate}
+        </time>
+        <span>•</span>
+        <span class={`px-2 py-0.5 rounded text-xs font-medium border ${categoryInfo.colorClass}`}>
+          {categoryInfo.label}
+        </span>
+        {post.data.rating && (
+          <span class="text-amber-500 font-mono text-xs">
+            {"★".repeat(post.data.rating)}{"☆".repeat(5 - post.data.rating)}
+          </span>
+        )}
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 leading-snug">
+        {post.data.title}
+      </h1>
+
+      <!-- 书评与影评的专有属性卡片 -->
+      {post.data.subjectAuthor && (
+        <div class="mt-4 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200/70 dark:border-neutral-800 text-xs flex flex-wrap items-center gap-4 text-neutral-600 dark:text-neutral-400">
+          <div>
+            <span class="text-neutral-400 dark:text-neutral-500">
+              {post.data.category === "books" ? "原著作者：" : "导演："}
+            </span>
+            <span class="font-medium text-neutral-800 dark:text-neutral-200">{post.data.subjectAuthor}</span>
+          </div>
+          {post.data.year && (
+            <div>
+              <span class="text-neutral-400 dark:text-neutral-500">
+                {post.data.category === "books" ? "出版年份：" : "上映年份："}
+              </span>
+              <span class="font-mono text-neutral-800 dark:text-neutral-200">{post.data.year}</span>
+            </div>
+          )}
+          {post.data.rating && (
+            <div>
+              <span class="text-neutral-400 dark:text-neutral-500">个人推荐指数：</span>
+              <span class="text-amber-500 font-mono">
+                {"★".repeat(post.data.rating)} ({post.data.rating}/5)
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      <!-- 标签 -->
+      {post.data.tags.length > 0 && (
+        <div class="mt-4 flex flex-wrap gap-1.5">
+          {post.data.tags.map((tag) => (
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- 文章正文 -->
+    <div class="prose dark:prose-invert prose-neutral max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-pre:rounded-xl prose-pre:border prose-pre:border-neutral-200/50 dark:prose-pre:border-neutral-800/80">
+      <Content />
+    </div>
+
+    <!-- 底部返回 -->
+    <div class="mt-12 pt-6 border-t border-neutral-200/60 dark:border-neutral-800/60 flex items-center justify-between">
+      <a
+        href="/blog"
+        class="text-xs font-medium text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors"
+      >
+        ← 返回博客列表
+      </a>
+      <a
+        href="#top"
+        class="text-xs font-medium text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors"
+      >
+        回到顶部 ↑
+      </a>
+    </div>
+  </article>
+</Layout>
