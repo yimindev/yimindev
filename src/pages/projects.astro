@@ -4,21 +4,15 @@ import ProjectCard from "../components/ProjectCard.astro";
 import { projectsData } from "../data/siteConfig";
 ---
 
-<Layout
-  title="开源项目"
-  description="yimindev 的开源项目与实验作品。"
->
+<Layout title="开源项目">
   <div class="space-y-6">
-    <div>
-      <h1 class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+    <div class="pb-2 border-b border-neutral-200 dark:border-neutral-800">
+      <h1 class="text-base font-semibold text-neutral-900 dark:text-neutral-100">
         开源项目
       </h1>
-      <p class="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-        构建有价值的工具与软件，拥抱开源。
-      </p>
     </div>
 
-    <div class="space-y-4 pt-2">
+    <div>
       {projectsData.map((project) => (
         <ProjectCard project={project} />
       ))}

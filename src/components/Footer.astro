@@ -4,44 +4,16 @@ import { siteConfig } from "../data/siteConfig";
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="w-full border-t border-neutral-200/60 dark:border-neutral-800/60 mt-20 transition-colors">
-  <div class="max-w-3xl mx-auto px-5 py-8 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 dark:text-neutral-400 gap-3">
-    <!-- 版权与构建说明 -->
-    <div class="flex items-center space-x-2">
-      <span>© {currentYear} {siteConfig.author}</span>
-      <span>•</span>
-      <span>Minimal & Fast</span>
-    </div>
-
-    <!-- 备案信息（国内严格合规要求：带可点击直链工信部官网） -->
-    <div class="flex flex-wrap items-center justify-center gap-3">
-      <a
-        href={siteConfig.icp.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors underline-offset-4 hover:underline"
-      >
-        {siteConfig.icp.text}
-      </a>
-
-      {siteConfig.policeBeian && (
-        <a
-          href={siteConfig.policeBeian.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center space-x-1 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
-        >
-          <span>{siteConfig.policeBeian.text}</span>
-        </a>
-      )}
-
-      <span>•</span>
-      <a
-        href="/rss.xml"
-        class="hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
-      >
-        RSS
-      </a>
-    </div>
+<footer class="w-full border-t border-neutral-200 dark:border-neutral-800 mt-20 transition-colors">
+  <div class="max-w-2xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 dark:text-neutral-500 gap-3">
+    <span>© {currentYear} {siteConfig.author}</span>
+    <a
+      href={siteConfig.icp.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:text-neutral-900 dark:hover:text-neutral-300 transition-colors"
+    >
+      {siteConfig.icp.text}
+    </a>
   </div>
 </footer>

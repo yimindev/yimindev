@@ -17,36 +17,30 @@ const categories = [
 ];
 ---
 
-<Layout
-  title="博客与文章"
-  description="包含技术博客、读书笔记、影评及日常随笔。"
->
+<Layout title="博客与文章">
   <div class="space-y-6">
-    <div>
-      <h1 class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
-        博客与文章
+    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-2 border-b border-neutral-200 dark:border-neutral-800">
+      <h1 class="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+        博客与笔记
       </h1>
-      <p class="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-        记录技术探索、阅读与观影感悟，以及一些碎碎念。
-      </p>
-    </div>
 
-    <!-- 分类筛选器 -->
-    <div class="flex flex-wrap gap-2 pt-2 border-b border-neutral-200/60 dark:border-neutral-800/60 pb-4">
-      {categories.map((cat) => (
-        <button
-          type="button"
-          data-category={cat.key}
-          class="category-btn text-xs px-3 py-1.5 rounded-md font-medium transition-colors cursor-pointer text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800"
-          class:list={[cat.key === "all" ? "active bg-neutral-200/70 dark:bg-neutral-800 text-neutral-950 dark:text-white" : ""]}
-        >
-          {cat.label}
-        </button>
-      ))}
+      <!-- 极简文字分类切换 -->
+      <div class="flex items-center gap-3 text-xs">
+        {categories.map((cat) => (
+          <button
+            type="button"
+            data-category={cat.key}
+            class="category-btn text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer"
+            class:list={[cat.key === "all" ? "active font-medium text-neutral-900 dark:text-white underline underline-offset-4" : ""]}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
     </div>
 
     <!-- 文章列表 -->
-    <div id="posts-container" class="divide-y divide-neutral-100 dark:divide-neutral-800">
+    <div id="posts-container" class="divide-y divide-neutral-100 dark:divide-neutral-900">
       {sortedPosts.map((post) => (
         <div data-post-category={post.data.category} class="post-item">
           <PostCard post={post} />
@@ -54,8 +48,8 @@ const categories = [
       ))}
     </div>
 
-    <div id="empty-state" class="hidden py-12 text-center text-sm text-neutral-500">
-      当前分类暂无文章。
+    <div id="empty-state" class="hidden py-10 text-center text-xs text-neutral-400">
+      暂无该分类文章。
     </div>
   </div>
 </Layout>
@@ -69,15 +63,13 @@ const categories = [
     btn.addEventListener('click', () => {
       const selected = btn.getAttribute('data-category');
 
-      // 更新按钮高亮样式
       buttons.forEach((b) => {
-        b.classList.remove('active', 'bg-neutral-200/70', 'dark:bg-neutral-800', 'text-neutral-950', 'dark:text-white');
-        b.classList.add('text-neutral-600', 'dark:text-neutral-400');
+        b.classList.remove('active', 'font-medium', 'text-neutral-900', 'dark:text-white', 'underline', 'underline-offset-4');
+        b.classList.add('text-neutral-400');
       });
-      btn.classList.add('active', 'bg-neutral-200/70', 'dark:bg-neutral-800', 'text-neutral-950', 'dark:text-white');
-      btn.classList.remove('text-neutral-600', 'dark:text-neutral-400');
+      btn.classList.add('active', 'font-medium', 'text-neutral-900', 'dark:text-white', 'underline', 'underline-offset-4');
+      btn.classList.remove('text-neutral-400');
 
-      // 筛选展示
       let visibleCount = 0;
       postItems.forEach((item) => {
         const itemCat = item.getAttribute('data-post-category');

@@ -6,32 +6,30 @@ const currentPath = Astro.url.pathname;
 
 const navLinks = [
   { href: "/blog", label: "博客" },
-  { href: "/projects", label: "开源项目" },
+  { href: "/projects", label: "项目" },
 ];
 ---
 
-<header class="sticky top-0 z-40 w-full backdrop-blur-md bg-neutral-50/80 dark:bg-neutral-950/80 border-b border-neutral-200/60 dark:border-neutral-800/60 transition-colors">
-  <div class="max-w-3xl mx-auto px-5 h-16 flex items-center justify-between">
-    <!-- Brand / Logo -->
+<header class="w-full">
+  <div class="max-w-2xl mx-auto px-4 h-16 flex items-center justify-between">
     <a
       href="/"
-      class="text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
+      class="text-sm font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 hover:opacity-80 transition-opacity"
     >
       {siteConfig.title}
     </a>
 
-    <!-- Nav list -->
-    <nav class="flex items-center space-x-1 sm:space-x-3 text-sm">
+    <nav class="flex items-center space-x-4 text-xs">
       {navLinks.map((item) => {
         const isActive = currentPath === item.href || (item.href !== "/" && currentPath.startsWith(item.href));
         return (
           <a
             href={item.href}
             class:list={[
-              "px-3 py-1.5 rounded-md font-medium transition-colors",
+              "transition-colors",
               isActive
-                ? "text-neutral-950 dark:text-white bg-neutral-200/60 dark:bg-neutral-800"
-                : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900",
+                ? "font-medium text-neutral-900 dark:text-neutral-100 underline underline-offset-4"
+                : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
             ]}
           >
             {item.label}
@@ -39,20 +37,15 @@ const navLinks = [
         );
       })}
 
-      <!-- GitHub Link -->
       <a
         href={siteConfig.github}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="GitHub 个人主页"
-        class="p-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors"
+        class="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
       >
-        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-        </svg>
+        GitHub
       </a>
 
-      <!-- Theme Switcher -->
       <ThemeToggle />
     </nav>
   </div>

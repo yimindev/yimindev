@@ -7,69 +7,38 @@ interface Props {
 
 const { post } = Astro.props;
 
-const categoryMap: Record<string, { label: string; colorClass: string }> = {
-  tech: {
-    label: "技术",
-    colorClass: "bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200/50 dark:border-blue-800/50",
-  },
-  books: {
-    label: "书评",
-    colorClass: "bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200/50 dark:border-amber-800/50",
-  },
-  movies: {
-    label: "影评",
-    colorClass: "bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border-purple-200/50 dark:border-purple-800/50",
-  },
-  notes: {
-    label: "随笔",
-    colorClass: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200/50 dark:border-emerald-800/50",
-  },
+const categoryLabelMap: Record<string, string> = {
+  tech: "技术",
+  books: "书评",
+  movies: "影评",
+  notes: "随笔",
 };
 
-const categoryInfo = categoryMap[post.data.category] || {
-  label: post.data.category,
-  colorClass: "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300",
-};
+const categoryLabel = categoryLabelMap[post.data.category] || post.data.category;
 
-// 格式化日期：YYYY-MM-DD
-const formattedDate = new Intl.DateTimeFormat("zh-CN", {
+const formattedDate = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "2-digit",
   day: "2-digit",
-}).format(post.data.pubDate);
+})
+  .format(post.data.pubDate)
+  .replace(/\//g, "-");
 ---
 
-<article class="group relative flex flex-col py-4 border-b border-neutral-100 dark:border-neutral-800/80 last:border-b-0">
-  <div class="flex items-center gap-2 text-xs text-neutral-400 dark:text-neutral-500 mb-1.5">
-    <time datetime={post.data.pubDate.toISOString()} class="font-mono">
-      {formattedDate}
-    </time>
-    <span>•</span>
-    <span class={`px-1.5 py-0.5 rounded text-[11px] font-medium border ${categoryInfo.colorClass}`}>
-      {categoryInfo.label}
-    </span>
-    {post.data.rating && (
-      <span class="text-amber-500 font-mono text-[11px]">
-        {"★".repeat(post.data.rating)}{"☆".repeat(5 - post.data.rating)}
-      </span>
-    )}
-  </div>
-
-  <h2 class="text-base font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-    <a href={`/blog/${post.id}`}>
+<div class="py-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 group">
+  <div class="flex items-baseline gap-2 min-w-0">
+    <a
+      href={`/blog/${post.id}`}
+      class="text-sm font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate"
+    >
       {post.data.title}
     </a>
-  </h2>
+  </div>
 
-  <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2 leading-relaxed">
-    {post.data.description}
-  </p>
-
-  {post.data.subjectAuthor && (
-    <div class="mt-2 text-xs text-neutral-400 dark:text-neutral-500">
-      <span>{post.data.category === "books" ? "作者：" : "导演："}</span>
-      <span class="text-neutral-600 dark:text-neutral-300">{post.data.subjectAuthor}</span>
-      {post.data.year && <span class="ml-1 font-mono">({post.data.year})</span>}
-    </div>
-  )}
-</article>
+  <div class="flex items-center gap-3 text-xs text-neutral-400 dark:text-neutral-500 shrink-0 font-mono">
+    <span>[{categoryLabel}]</span>
+    <time datetime={post.data.pubDate.toISOString()}>
+      {formattedDate}
+    </time>
+  </div>
+</div>

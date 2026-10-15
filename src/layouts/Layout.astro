@@ -23,27 +23,18 @@ const pageTitle = title === siteConfig.title ? title : `${title} - ${siteConfig.
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate" type="application/rss+xml" title={siteConfig.title} href="/rss.xml" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
 
-    <!-- 防闪烁的极简深色模式初始化脚本 -->
     <script is:inline>
-      const getTheme = () => {
+      const theme = (() => {
         if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
           return localStorage.getItem('theme');
         }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'light';
-      };
-      const theme = getTheme();
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      })();
       if (theme === 'dark') {
         document.documentElement.classList.add('dark');
       } else {
@@ -51,9 +42,9 @@ const pageTitle = title === siteConfig.title ? title : `${title} - ${siteConfig.
       }
     </script>
   </head>
-  <body class="min-h-screen flex flex-col font-sans antialiased selection:bg-neutral-200 dark:selection:bg-neutral-800">
+  <body class="min-h-screen flex flex-col font-sans antialiased text-neutral-800 dark:text-neutral-200 bg-white dark:bg-neutral-950">
     <Header />
-    <main class="flex-1 max-w-3xl w-full mx-auto px-5 py-10">
+    <main class="flex-1 max-w-2xl w-full mx-auto px-4 py-8">
       <slot />
     </main>
     <Footer />
