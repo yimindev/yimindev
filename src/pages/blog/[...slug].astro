@@ -30,12 +30,12 @@ const formattedDate = new Intl.DateTimeFormat("zh-CN", {
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
-  <article class="max-w-[680px] mx-auto">
+  <article class="w-full">
     <!-- 返回导航 -->
     <div class="mb-8">
       <a
         href="/blog"
-        class="text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors inline-flex items-center gap-1"
+        class="text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors inline-flex items-center gap-1 font-mono"
       >
         <span>←</span>
         <span>全部文章</span>
@@ -62,7 +62,7 @@ const formattedDate = new Intl.DateTimeFormat("zh-CN", {
         )}
       </div>
 
-      <h1 class="text-2xl sm:text-[28px] font-bold tracking-tight text-neutral-900 dark:text-neutral-100 leading-snug">
+      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 leading-snug">
         {post.data.title}
       </h1>
 
@@ -74,7 +74,7 @@ const formattedDate = new Intl.DateTimeFormat("zh-CN", {
 
       <!-- 书评与影评专属元信息条 -->
       {post.data.subjectAuthor && (
-        <div class="mt-5 py-2.5 px-3.5 rounded-md bg-neutral-100/70 dark:bg-neutral-900/60 text-xs text-neutral-600 dark:text-neutral-400 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono">
+        <div class="mt-5 py-2.5 px-4 rounded-md bg-neutral-100/70 dark:bg-neutral-900/60 text-xs text-neutral-600 dark:text-neutral-400 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono">
           <div>
             <span class="text-neutral-400 font-sans">{post.data.category === "books" ? "作者：" : "导演："}</span>
             <span class="text-neutral-800 dark:text-neutral-200 font-sans font-medium">{post.data.subjectAuthor}</span>
