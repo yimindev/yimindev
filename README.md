@@ -28,6 +28,9 @@ pnpm build
 
 # 本地预览打包产物
 pnpm preview
+
+# 一键编译并自动部署到阿里云 ECS
+pnpm deploy
 ```
 
 ## 撰写与发布新文章

@@ -8,6 +8,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "deploy": "astro build && rsync -avz --delete dist/ root@47.114.57.250:/var/www/yimindev/dist/",
     "astro": "astro"
   },
   "dependencies": {
